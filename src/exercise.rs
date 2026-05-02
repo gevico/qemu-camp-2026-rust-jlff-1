@@ -123,6 +123,12 @@ impl Exercise {
                 .args(RUSTC_EDITION_ARGS)
                 .output(),
             Mode::Clippy => {
+                Command::new("cargo")
+                    .args(&["clean", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
+                    .args(RUSTC_COLOR_ARGS)
+                    .output()
+                    .expect("Failed to run 'cargo clean'");
+
                 let cargo_toml = format!(
                     r#"[package]
 name = "{}"
